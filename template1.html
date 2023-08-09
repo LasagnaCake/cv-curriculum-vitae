@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+	<head>
+		<title>Curriculum Vitae</title>
+		<style>
+			:root {
+				/* Gray */
+				--bg-color: #eee;
+				--hr-color: #aaa;
+				/* Blue */
+				--bg-color: aliceblue;
+				--hr-color: #abd;
+				/* Purple */
+				--bg-color: #f9eeff;
+				--hr-color: #c9e;
+			}
+			body {
+				display: flex;
+				justify-content: center;
+				font-family:Helvetica, Arial, sans-serif;
+				flex-wrap: wrap;
+				font-size: 10pt;
+			}
+			header, footer {
+				width: 90%;
+				text-align: center;
+				background-color: var(--bg-color);
+				border-radius: 10px;
+				margin: 1.5vh auto;
+				padding: 1vw 1vw;
+				padding-bottom: 2vh;
+			}
+			hr {
+				width:92%;
+				height: 4px;
+				background-color: var(--hr-color);
+				border-radius: 5px;
+				border: none;
+			}
+			.cv-content {
+				width: 42%;
+				margin: 1.5vh auto;
+				margin-inline: 2%;
+				display: block;
+				text-align: center;
+				background-color: var(--bg-color);
+				border-radius: 10px;
+				padding: 1vh 1vw;
+			}
+			.cv-history {
+				width: 44%;
+				border-radius: 0px;
+				background-color: white;
+				padding: 0 0;
+			}
+			.cv-history-card {
+				width: 98%;
+				background-color: var(--bg-color);
+				border-radius: 10px;
+				padding: 1vw;
+			}
+			.cv-info-card {
+				width: 100%;
+				margin-bottom: 2.5vh;
+			}
+			ul {
+				text-align: justify;
+				list-style-type: "► ";
+				list-style-position: outside;
+				line-height:150%;
+				padding-right: 2vw;
+			}
+			p {
+				text-align: justify;
+				padding: 0 2vw;
+			}
+			button:hover {
+				transition: filter .25s;
+				filter: brightness(80%);
+			}
+			.palette-button {
+				margin: 1vh auto;
+				margin-inline: 1vw;
+				border-style: solid;
+				border-radius: 10px;
+				font-size: 14pt;
+				padding: 1vw;
+				border-width: 5px;
+			}
+			.print-button {
+				margin: 1vh auto;
+				margin-top: 5vh;
+				border-style: solid;
+				border-radius: 10px;
+				font-size: 18pt;
+				padding: 5vw 1vw;
+				width: 50%;
+				border-width: 5px;
+				border-color: var(--hr-color);
+				background-color: var(--hr-color);
+				color: black;
+			}
+			.pb1 {
+				/* Gray */
+				background-color: #eee;
+				border-color: #aaa;
+			}
+			.pb2 {
+				/* Blue */
+				background-color: aliceblue;
+				border-color: #abd;
+			}
+			.pb3 {
+				/* Purple */
+				background-color: #f9eeff;
+				border-color: #c9e;
+			}
+			.cv-settings {
+				width: 90%;
+				text-align: center;
+				background-color: var(--bg-color);
+				border-radius: 10px;
+				margin: 1.5vh auto;
+				padding: 1vw 1vw;
+				padding-bottom: 2vh;
+			}
+			@media print {
+				.no-print {
+					display: none;
+				}
+			}
+		</style>
+		<script>
+			function setPalette(bg, hr) {
+				const docstyle = document.documentElement.style;
+				docstyle.setProperty("--bg-color", bg);
+				docstyle.setProperty("--hr-color", hr);
+			}
+		</script>
+	</head>
+	<body>
+		<!-- CV Header -->
+		<header>
+			<h1>
+				YOUR_NAME
+			</h1>
+			<em>
+				YOUR_TITLE
+			</em>
+		</header>
+		<hr>
+		<!-- Job History -->
+		<div class="cv-content cv-history">
+			<h2>
+				Experiência Profissional
+			</h2>
+			<!-- Company information -->
+			<div class="cv-history-card">
+				<h3>
+					COMPANY_NAME
+				</h3>
+				<p>
+					JOB_DURATION
+				</p>
+			</div>
+			<br>
+		</div>
+		<!-- Stats -->
+		<div class="cv-content">
+			<!-- Academic information -->
+			<div class="cv-info-card">
+				<h2>
+					Formações Acadêmicas
+				</h2>
+				<p>
+					YOUR_EDUCATION
+				</p>
+			</div>
+			<hr>
+			<!-- Skill information -->
+			<div class="cv-info-card">	
+				<h2>
+					Habilidades
+				</h2>
+				<ul>
+					<li>SKILL_1</li>
+					<li>SKILL_2</li>
+					<li>SKILL_3</li>
+				</ul>
+			</div>
+			<hr>
+			<!-- Personal information -->
+			<div class="cv-info-card">
+				<h2>
+					Dados Pessoais
+				</h2>
+				<p>
+					YOUR_INFO
+				</p>
+			</div>
+		</div>
+		<hr>
+		<!-- CV Footer -->
+		<footer>
+			<h2>
+				Contato
+			</h2>
+			YOUR_CONTACT_INFO
+		</footer><br>
+		<hr class="no-print">
+		<div class="no-print cv-settings">
+			<h1>Settings</h1>
+			<h2>Palette</h2>
+			<button class="palette-button pb1" onclick="setPalette('#eee', '#aaa')">Palette 1</button>
+			<button class="palette-button pb2" onclick="setPalette('aliceblue', '#abd')">Palette 2</button>
+			<button class="palette-button pb3" onclick="setPalette('#f9eeff', '#c9e')">Palette 3</button>
+			<br><button class="print-button" onclick="window.print()">
+				Print!
+			</button>
+		</div>
+	</body>
+</html>
