@@ -22,6 +22,14 @@
 				flex-wrap: wrap;
 				font-size: 10pt;
 			}
+			.curriculum-vitae {
+				width: 70vw;
+				display: flex;
+				justify-content: center;
+				font-family:Helvetica, Arial, sans-serif;
+				flex-wrap: wrap;
+				font-size: 10pt;
+			}
 			header, footer {
 				width: 90%;
 				text-align: center;
@@ -94,8 +102,8 @@
 				border-style: solid;
 				border-radius: 10px;
 				font-size: 18pt;
-				padding: 5vw 1vw;
-				width: 50%;
+				padding: 1vw 1vw;
+				width: 75%;
 				border-width: 5px;
 				border-color: var(--hr-color);
 				background-color: var(--hr-color);
@@ -125,99 +133,265 @@
 				padding: 1vw 1vw;
 				padding-bottom: 2vh;
 			}
+			input {
+				width: 80%;
+			}
+			textarea {
+				max-width: 80%;
+				width: 80%;
+			}
+			.no-print {
+				width: 20vw;
+			}
 			@media print {
 				.no-print {
 					display: none;
 				}
+				.curriculum-vitae {
+					width: 100vw;
+				}
 			}
 		</style>
 		<script>
+			let skills = [];
+			let work = [];
+			let skuuid = 0;
+			let wkuuid = 0;
+			
+			const SkillItem = (desc) => {return {id: skuuid++, desc: desc}};
+			const WorkItem = (company, desc) => {return {id: wkuuid++, company: company, desc: desc}};
+
 			function setPalette(bg, hr) {
 				const docstyle = document.documentElement.style;
 				docstyle.setProperty("--bg-color", bg);
 				docstyle.setProperty("--hr-color", hr);
 			}
+
+			function getParameter(param) {
+				return document.getElementById(`cv-${param}-display`);
+			}
+
+			function setParameter(param, val) {
+				getParameter(param).innerText = value;
+			}
+
+			function setParameterByInput(param) {
+				const ip = document.getElementById(`${param}-in`);
+				const pr = getParameter(param);
+				pr.innerText = ip.value;
+			}
+
+			function updateSkills() {
+				const skdisp = getParameter("skill");
+				const sklist = document.getElementById("skill-list");
+				Array.from(skdisp.children).forEach((c) => skdisp.removeChild(c));
+				Array.from(sklist.children).forEach((c) => sklist.removeChild(c));
+				skills.forEach((s, idx) => {
+					const i = document.createElement('li');
+					i.innerText = s.desc;
+					skdisp.appendChild(i);
+					const btn = document.createElement('button');
+					btn.id = `skill-btn-${idx}`
+					btn.innerText = "-"
+					btn.onclick = (ev) => {
+						skills.splice(skills.indexOf(skills.find((v) => v.id == s.id)), 1);
+						sklist.removeChild(document.getElementById(`skill-btn-${idx}`));
+						updateSkills();
+					};
+					const dsc = document.createElement('label');
+					dsc.innerText = s.desc;
+					const br = document.createElement('br');
+					sklist.appendChild(btn);
+					sklist.appendChild(dsc);
+					sklist.appendChild(br);
+				});
+			}
+
+			function HistoryCard(company, desc) {
+				const hc = document.createElement('div');
+				hc.className = "cv-history-card";
+				const cmp = document.createElement('h3');
+				const dsc = document.createElement('p');
+				hc.appendChild(cmp);
+				hc.appendChild(dsc);
+				cmp.innerText = company;
+				dsc.innerText = desc;
+				return hc;
+			}
+
+			function updateWork() {
+				const wkdisp = getParameter("history");
+				const wklist = document.getElementById("work-list");
+				Array.from(wkdisp.children).forEach((c) => wkdisp.removeChild(c));
+				Array.from(wklist.children).forEach((c) => wklist.removeChild(c));
+				work.forEach((w, idx) => {
+					const wc = HistoryCard(w.company, w.desc);
+					const space = document.createElement('br');
+					wkdisp.appendChild(wc);
+					wkdisp.appendChild(space);
+					const btn = document.createElement('button');
+					btn.id = `work-btn-${idx}`
+					btn.innerText = "-"
+					btn.onclick = (ev) => {
+						work.splice(work.indexOf(work.find((v) => v.id == w.id)), 1);
+						wklist.removeChild(document.getElementById(`work-btn-${idx}`));
+						updateWork();
+					};
+					const dsc = document.createElement('label');
+					dsc.innerText = w.company;
+					const br = document.createElement('br');
+					wklist.appendChild(btn);
+					wklist.appendChild(dsc);
+					wklist.appendChild(br);
+				});
+			}
+
+			function updatePage() {
+				setParameterByInput('name');
+				setParameterByInput('title');
+				setParameterByInput('education');
+				setParameterByInput('personal');
+				updateSkills();
+			}
+
+			function addSkill() {
+				const skin = document.getElementById('skill-in');
+				skills.push(SkillItem(skin.value));
+				updateSkills();
+			}
+
+			function clearSkills() {
+				skills.splice(0, skills.length);
+				updateSkills();
+			}
+
+			function addWork() {
+				const cmpin = document.getElementById('company-in');
+				const dscin = document.getElementById('compdesc-in');
+				work.push(WorkItem(cmpin.value, dscin.value));
+				updateWork();
+			}
+
+			function clearWork() {
+				work.splice(0, work.length);
+				updateWork();
+			}
 		</script>
 	</head>
 	<body>
-		<!-- CV Header -->
-		<header>
-			<h1>
-				YOUR_NAME
-			</h1>
-			<em>
-				YOUR_TITLE
-			</em>
-		</header>
-		<hr>
-		<!-- Job History -->
-		<div class="cv-content cv-history">
-			<h2>
-				Experiência Profissional
-			</h2>
-			<!-- Company information -->
-			<div class="cv-history-card">
-				<h3>
-					COMPANY_NAME
-				</h3>
-				<p>
-					JOB_DURATION
-				</p>
-			</div>
-			<br>
-		</div>
-		<!-- Stats -->
-		<div class="cv-content">
-			<!-- Academic information -->
-			<div class="cv-info-card">
-				<h2>
-					Formações Acadêmicas
-				</h2>
-				<p>
-					YOUR_EDUCATION
-				</p>
-			</div>
-			<hr>
-			<!-- Skill information -->
-			<div class="cv-info-card">	
-				<h2>
-					Habilidades
-				</h2>
-				<ul>
-					<li>SKILL_1</li>
-					<li>SKILL_2</li>
-					<li>SKILL_3</li>
-				</ul>
-			</div>
-			<hr>
-			<!-- Personal information -->
-			<div class="cv-info-card">
-				<h2>
-					Dados Pessoais
-				</h2>
-				<p>
-					YOUR_INFO
-				</p>
+		<div class="no-print">
+			<div class="cv-settings" onload="updatePage()">
+				<h1>Info</h1>
+				<button onclick="updatePage()">Update</button><br><br>
+				<label><strong>Nome</strong></label><br>
+				<input id="name-in" oninput="setParameterByInput('name')"><br><br>
+				<label><strong>Título</strong></label><br>
+				<input id="title-in" oninput="setParameterByInput('title')"><br><br>
+				<label><strong>Experiência Profissional</strong></label><br><br>
+				<label><strong>Empresa</strong></label><br>
+				<input id="company-in" type="text"><br>
+				<label><strong>Descrição</strong></label><br>
+				<textarea id="compdesc-in" type="text"></textarea><br>
+				<button id="work-insert" onclick="addWork()">Adicionar</button>
+				<button id="work-clear" onclick="clearWork()">Limpar</button><br><br>
+				<div id="work-list">
+				</div><br><br>
+				<label><strong>Dados Pessoais</strong></label><br>
+				<textarea id="personal-in" oninput="setParameterByInput('personal')" type="text"></textarea><br><br>
+				<label><strong>Formações Acadêmicas</strong></label><br>
+				<textarea id="education-in" oninput="setParameterByInput('education')" type="text"></textarea><br><br>
+				<label><strong>Habilidades</strong></label><br>
+				<textarea id="skill-in" type="text"></textarea><br>
+				<button id="skill-insert" onclick="addSkill()">Adicionar</button>
+				<button id="skill-clear" onclick="clearSkills()">Limpar</button><br><br>
+				<div id="skill-list">
+				</div><br><br>
+				<label><strong>Dados Pessoais</strong></label><br>
+				<textarea id="personal-in" oninput="setParameterByInput('personal')" type="text"></textarea><br><br>
+				<hr>
+				<h1>Style</h1>
+				<h2>Palette</h2>
+				<button class="palette-button pb1" onclick="setPalette('#eee', '#aaa')">Palette 1</button>
+				<button class="palette-button pb2" onclick="setPalette('aliceblue', '#abd')">Palette 2</button>
+				<button class="palette-button pb3" onclick="setPalette('#f9eeff', '#c9e')">Palette 3</button>
+				<hr>
+				<button class="print-button" onclick="window.print()">
+					Print!
+				</button>
 			</div>
 		</div>
-		<hr>
-		<!-- CV Footer -->
-		<footer>
-			<h2>
-				Contato
-			</h2>
-			YOUR_CONTACT_INFO
-		</footer><br>
-		<hr class="no-print">
-		<div class="no-print cv-settings">
-			<h1>Settings</h1>
-			<h2>Palette</h2>
-			<button class="palette-button pb1" onclick="setPalette('#eee', '#aaa')">Palette 1</button>
-			<button class="palette-button pb2" onclick="setPalette('aliceblue', '#abd')">Palette 2</button>
-			<button class="palette-button pb3" onclick="setPalette('#f9eeff', '#c9e')">Palette 3</button>
-			<br><button class="print-button" onclick="window.print()">
-				Print!
-			</button>
+		<div class="curriculum-vitae">
+			<!-- CV Header -->
+			<header>
+				<h1 id="cv-name-display">
+					YOUR_NAME
+				</h1>
+				<em id="cv-title-display">
+					YOUR_TITLE
+				</em>
+			</header>
+			<hr>
+			<!-- Job History -->
+			<div class="cv-content cv-history">
+				<h2>
+					Experiência Profissional
+				</h2>
+				<!-- Company information -->
+				<div id="cv-history-display" class="cv-history-content">
+					<div class="cv-history-card">
+						<h3>
+							COMPANY_NAME
+						</h3>
+						<p>
+							COMPANY_DESCRIPTION
+						</p>
+					</div>
+				</div>
+			</div>
+			<!-- Stats -->
+			<div class="cv-content">
+				<!-- Academic information -->
+				<div class="cv-info-card">
+					<h2>
+						Formações Acadêmicas
+					</h2>
+					<p id="cv-education-display">
+						YOUR_EDUCATION
+					</p>
+				</div>
+				<hr>
+				<!-- Skill information -->
+				<div class="cv-info-card">	
+					<h2>
+						Habilidades
+					</h2>
+					<ul id="cv-skill-display">
+						<li>SKILL_1</li>
+						<li>SKILL_2</li>
+						<li>SKILL_3</li>
+					</ul>
+				</div>
+				<hr>
+				<!-- Personal information -->
+				<div class="cv-info-card">
+					<h2>
+						Dados Pessoais
+					</h2>
+					<p id="cv-personal-display">
+						YOUR_INFO
+					</p>
+				</div>
+			</div>
+			<hr>
+			<!-- CV Footer -->
+			<footer>
+				<h2>
+					Contato
+				</h2>
+				<p id="cv-contact-display">
+
+				</p>
+			</footer>
 		</div>
 	</body>
 </html>
