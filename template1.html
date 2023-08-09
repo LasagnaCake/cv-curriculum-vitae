@@ -277,6 +277,11 @@
 				work.splice(0, work.length);
 				updateWork();
 			}
+
+			function printCurriculum() {
+				updatePage();
+				window.print();
+			}
 		</script>
 	</head>
 	<body>
@@ -316,7 +321,7 @@
 				<button class="palette-button pb2" onclick="setPalette('aliceblue', '#abd')">Palette 2</button>
 				<button class="palette-button pb3" onclick="setPalette('#f9eeff', '#c9e')">Palette 3</button>
 				<hr>
-				<button class="print-button" onclick="window.print()">
+				<button class="print-button" onclick="printCurriculum()">
 					Print!
 				</button>
 			</div>
