@@ -133,6 +133,9 @@
 				padding: 1vw 1vw;
 				padding-bottom: 2vh;
 			}
+			.spaced-button {
+				margin-right: .5vw;
+			}
 			input {
 				width: 80%;
 			}
@@ -160,6 +163,15 @@
 			
 			const SkillItem = (desc) => {return {id: skuuid++, desc: desc}};
 			const WorkItem = (company, desc) => {return {id: wkuuid++, company: company, desc: desc}};
+			
+			function ItemButton(id, text, onclick) {
+				const btn = document.createElement('button');
+				btn.id = id;
+				btn.innerText = text;
+				btn.onclick = onclick;
+				btn.classList.add('spaced-button');
+				return btn;
+			}
 
 			function setPalette(bg, hr) {
 				const docstyle = document.documentElement.style;
@@ -190,14 +202,15 @@
 					const i = document.createElement('li');
 					i.innerText = s.desc;
 					skdisp.appendChild(i);
-					const btn = document.createElement('button');
-					btn.id = `skill-btn-${idx}`
-					btn.innerText = "-"
-					btn.onclick = (ev) => {
-						skills.splice(skills.indexOf(skills.find((v) => v.id == s.id)), 1);
-						sklist.removeChild(document.getElementById(`skill-btn-${idx}`));
-						updateSkills();
-					};
+					const btn = ItemButton (
+						`skill-btn-${idx}`,
+						"-",
+						(ev) => {
+							skills.splice(skills.indexOf(skills.find((v) => v.id == s.id)), 1);
+							sklist.removeChild(document.getElementById(`skill-btn-${idx}`));
+							updateSkills();
+						}
+					);
 					const dsc = document.createElement('label');
 					dsc.innerText = s.desc;
 					const br = document.createElement('br');
@@ -229,18 +242,27 @@
 					const space = document.createElement('br');
 					wkdisp.appendChild(wc);
 					wkdisp.appendChild(space);
-					const btn = document.createElement('button');
-					btn.id = `work-btn-${idx}`
-					btn.innerText = "-"
-					btn.onclick = (ev) => {
-						work.splice(work.indexOf(work.find((v) => v.id == w.id)), 1);
-						wklist.removeChild(document.getElementById(`work-btn-${idx}`));
-						updateWork();
-					};
+					const btn = ItemButton(
+						`work-btn-${idx}`,
+						"-",
+						(ev) => {
+							work.splice(work.indexOf(work.find((v) => v.id == w.id)), 1);
+							wklist.removeChild(document.getElementById(`work-btn-${idx}`));
+							wklist.removeChild(document.getElementById(`work-▲-${idx}`));
+							wklist.removeChild(document.getElementById(`work-▼-${idx}`));
+							updateWork();
+						}
+					)
+					const manip = [
+						ItemButton(`work-▲-${idx}`, `▲`, (ev) => {moveWork(w.id, -1)}),
+						ItemButton(`work-▼-${idx}`, `▼`, (ev) => {moveWork(w.id, +1)})
+					]
 					const dsc = document.createElement('label');
 					dsc.innerText = w.company;
 					const br = document.createElement('br');
 					wklist.appendChild(btn);
+					wklist.appendChild(manip[0]);
+					wklist.appendChild(manip[1]);
 					wklist.appendChild(dsc);
 					wklist.appendChild(br);
 				});
@@ -252,6 +274,22 @@
 				setParameterByInput('education');
 				setParameterByInput('personal');
 				updateSkills();
+				updateWork();
+			}
+
+			function move(arr, oldi, newi) {
+				if (newi >= arr.length || newi < 0) return arr;
+				arr.splice(newi, 0, arr.splice(oldi, 1)[0]);
+				return arr;
+			}
+
+			function findIndex(arr, pred) {
+				return arr.indexOf(arr.find(pred))
+			}
+
+			function moveWork(id, offset) {
+				const at = findIndex(work, (v) => v.id == id);
+				work = move(work, at, at + offset);
 				updateWork();
 			}
 
