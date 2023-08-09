@@ -252,6 +252,7 @@
 				setParameterByInput('education');
 				setParameterByInput('personal');
 				updateSkills();
+				updateWork();
 			}
 
 			function addSkill() {
@@ -296,8 +297,6 @@
 				<button id="work-clear" onclick="clearWork()">Limpar</button><br><br>
 				<div id="work-list">
 				</div><br><br>
-				<label><strong>Dados Pessoais</strong></label><br>
-				<textarea id="personal-in" oninput="setParameterByInput('personal')" type="text"></textarea><br><br>
 				<label><strong>Formações Acadêmicas</strong></label><br>
 				<textarea id="education-in" oninput="setParameterByInput('education')" type="text"></textarea><br><br>
 				<label><strong>Habilidades</strong></label><br>
@@ -308,6 +307,8 @@
 				</div><br><br>
 				<label><strong>Dados Pessoais</strong></label><br>
 				<textarea id="personal-in" oninput="setParameterByInput('personal')" type="text"></textarea><br><br>
+				<label><strong>Contato</strong></label><br>
+				<textarea id="contact-in" oninput="setParameterByInput('contact')" type="text"></textarea><br><br>
 				<hr>
 				<h1>Style</h1>
 				<h2>Palette</h2>
