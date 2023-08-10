@@ -361,7 +361,7 @@
 				}, 0);
 			}
 
-			function saveCurriculum() {
+			function CurriculumData() {
 				updatePage();
 				const data = {
 					name: getInput("name").value,
@@ -373,9 +373,26 @@
 					contact: getInput("contact").value,
 					_skuuid: skuuid,
 					_wkuuid: wkuuid,
+				};
+				data.toString = (s = null) => {return JSON.stringify(data, null, s);};
+				return data;
+			}
+
+			function saveToLocalStorage() {
+				sessionStorage.setItem('cv-data', CurriculumData().toString());
+			}
+			
+			function loadFromLocalStorage() {
+				const data = sessionStorage.getItem('cv-data');
+				if (data.length) {
+					loadCurriculum(JSON.parse(data));
 				}
+			}
+
+			function saveCurriculum() {
+				updatePage();
 				saveFile(
-					JSON.stringify(data, null, '\t'),
+					CurriculumData().toString('\t'),
 					"curriculum.json",
 					"application/json"
 				);
@@ -403,9 +420,9 @@
 			}
 		</script>
 	</head>
-	<body>
+	<body onload="loadFromLocalStorage()" onbeforeunload="saveToLocalStorage()">
 		<div class="no-print">
-			<div class="cv-settings" onload="updatePage()">
+			<div class="cv-settings">
 				<h1>Dados</h1>
 				<button onclick="updatePage()">Atualizar</button><br><br>
 				<label><strong>Nome</strong></label><br>
@@ -496,7 +513,7 @@
 				<!-- Skill information -->
 				<div class="cv-info-card">	
 					<h2>
-						Habilidades
+						Habilidades / Competências
 					</h2>
 					<ul id="cv-skill-display">
 						<li>SKILL_1</li>
