@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+	<head>
+		<meta charset="utf8">
+		<title>Curriculum Vitae</title>
+		<style>
+			:root {
+				/* Gray */
+				--bg-color: #eee;
+				--hr-color: #aaa;
+				/* Blue */
+				--bg-color: aliceblue;
+				--hr-color: #abd;
+				/* Purple */
+				--bg-color: #f9eeff;
+				--hr-color: #c9e;
+			}
+			body {
+				display: flex;
+				justify-content: center;
+				font-family:Helvetica, Arial, sans-serif;
+				flex-wrap: wrap;
+				font-size: 10pt;
+				-webkit-print-color-adjust: exact !important;
+				color-adjust: exact !important;
+				print-color-adjust: exact !important;
+			}
+			.curriculum-vitae {
+				width: 70vw;
+				display: flex;
+				justify-content: center;
+				font-family:Helvetica, Arial, sans-serif;
+				flex-wrap: wrap;
+				font-size: 10pt;
+			}
+			header, footer {
+				width: 90%;
+				text-align: center;
+				background-color: var(--bg-color);
+				border-radius: 10px;
+				margin: 1.5vh auto;
+				padding: 1vw 1vw;
+				padding-bottom: 2vh;
+			}
+			hr {
+				width:92%;
+				height: 4px;
+				background-color: var(--hr-color);
+				border-radius: 5px;
+				border: none;
+			}
+			.cv-content {
+				width: 42%;
+				margin: 1.5vh auto;
+				margin-inline: 2%;
+				display: block;
+				text-align: center;
+				background-color: var(--bg-color);
+				border-radius: 10px;
+				padding: 1vh 1vw;
+			}
+			.cv-history {
+				width: 44%;
+				border-radius: 0px;
+				background-color: white;
+				padding: 0 0;
+			}
+			.cv-history-card {
+				width: 98%;
+				background-color: var(--bg-color);
+				border-radius: 10px;
+				padding: 1vw;
+			}
+			.cv-info-card {
+				width: 100%;
+				margin-bottom: 2.5vh;
+			}
+			ul {
+				text-align: justify;
+				list-style-type: "► ";
+				list-style-position: outside;
+				line-height:150%;
+				padding-right: 2vw;
+			}
+			p {
+				text-align: justify;
+				padding: 0 2vw;
+			}
+			button:hover {
+				transition: filter .25s;
+				filter: brightness(80%);
+			}
+			.palette-button {
+				margin: 1vh auto;
+				margin-inline: 1vw;
+				border-style: solid;
+				border-radius: 10px;
+				font-size: 14pt;
+				padding: 1vw;
+				border-width: 5px;
+			}
+			.print-button {
+				margin: 1vh auto;
+				margin-top: 5vh;
+				border-style: solid;
+				border-radius: 10px;
+				font-size: 18pt;
+				padding: 1vw 1vw;
+				width: 75%;
+				border-width: 5px;
+				border-color: var(--hr-color);
+				background-color: var(--hr-color);
+				color: black;
+			}
+			.pb1 {
+				/* Gray */
+				background-color: #eee;
+				border-color: #aaa;
+			}
+			.pb2 {
+				/* Blue */
+				background-color: aliceblue;
+				border-color: #abd;
+			}
+			.pb3 {
+				/* Purple */
+				background-color: #f9eeff;
+				border-color: #c9e;
+			}
+			.nopb {
+				/* Purple */
+				background-color: #fff;
+				border-color: #000;
+			}
+			.cv-settings {
+				width: 90%;
+				text-align: center;
+				background-color: var(--bg-color);
+				border-radius: 10px;
+				margin: 1.5vh auto;
+				padding: 1vw 1vw;
+				padding-bottom: 2vh;
+			}
+			.spaced-button {
+				margin-right: .5vw;
+			}
+			input {
+				width: 80%;
+			}
+			textarea {
+				min-width: 80%;
+				max-width: 80%;
+				width: 80%;
+				min-height: 100px;
+			}
+			.no-print {
+				width: 20vw;
+			}
+			@media print {
+				.no-print {
+					display: none;
+				}
+				.curriculum-vitae {
+					width: 100vw;
+				}
+			}
+		</style>
+		<script>
+			"use strict";
+			let skills = [];
+			let work = [];
+			let skuuid = 0;
+			let wkuuid = 0;
+
+			const icons = {
+				add: '+',
+				remove: '☓',
+				up: '⏶',
+				down: '⏷',
+			};
+			
+			const SkillItem = (desc) => {return {id: skuuid++, desc: desc}};
+			const WorkItem = (company, desc) => {return {id: wkuuid++, company: company, desc: desc}};
+			
+			function ItemButton(id, text, onclick) {
+				const btn = document.createElement('button');
+				btn.id = id;
+				btn.innerText = text;
+				btn.onclick = onclick;
+				btn.classList.add('spaced-button');
+				return btn;
+			}
+
+			function setPalette(bg, hr) {
+				const docstyle = document.documentElement.style;
+				docstyle.setProperty("--bg-color", bg);
+				docstyle.setProperty("--hr-color", hr);
+			}
+
+			function getParameter(param) {
+				return document.getElementById(`cv-${param}-display`);
+			}
+
+			function getInput(input) {
+				return document.getElementById(`${input}-in`);
+			}
+
+			function setParameter(param, val) {
+				getParameter(param).innerText = value;
+			}
+
+			function setParameterByInput(param) {
+				const ip = document.getElementById(`${param}-in`);
+				const pr = getParameter(param);
+				pr.innerText = ip.value;
+			}
+
+			function Table() {
+				const table = document.createElement('table');
+				table.style = 'width: 100%;';
+				return table;
+			}
+
+			function TablePair(parent) {
+				const pair = [
+					document.createElement('td'),
+					document.createElement('td')
+				];
+				const row = document.createElement('tr');
+				row.appendChild(pair[0]);
+				row.appendChild(pair[1]);
+				parent.appendChild(row);
+				pair[0].style = 'width: 35%; min-height: 64px;';
+				return pair;
+			}
+
+			function updateSkills() {
+				const skdisp = getParameter("skill");
+				const sklist = document.getElementById("skill-list");
+				Array.from(skdisp.children).forEach((c) => skdisp.removeChild(c));
+				Array.from(sklist.children).forEach((c) => sklist.removeChild(c));
+				const table = Table();
+				sklist.appendChild(table);
+				skills.forEach((s, idx) => {
+					const i = document.createElement('li');
+					i.innerText = s.desc;
+					skdisp.appendChild(i);
+					const btn = ItemButton (
+						`skill-btn-${idx}`,
+						icons.remove,
+						(ev) => {
+							skills.splice(skills.indexOf(skills.find((v) => v.id == s.id)), 1);
+							updateSkills();
+						}
+					);
+					const manip = [
+						ItemButton(`skill-up-${idx}`, icons.up, (ev) => {moveSkill(s.id, -1)}),
+						ItemButton(`skill-dn-${idx}`, icons.down, (ev) => {moveSkill(s.id, +1)})
+					]
+					const dsc = document.createElement('label');
+					dsc.innerText = s.desc;
+					const sp = TablePair(table);
+					sp[0].appendChild(btn);
+					sp[0].appendChild(manip[0]);
+					sp[0].appendChild(manip[1]);
+					sp[1].appendChild(dsc);
+				});
+			}
+
+			function HistoryCard(company, desc) {
+				const hc = document.createElement('div');
+				hc.className = "cv-history-card";
+				const cmp = document.createElement('h3');
+				const dsc = document.createElement('p');
+				hc.appendChild(cmp);
+				hc.appendChild(dsc);
+				cmp.innerText = company;
+				dsc.innerText = desc;
+				return hc;
+			}
+
+			function updateWork() {
+				const wkdisp = getParameter("history");
+				const wklist = document.getElementById("work-list");
+				Array.from(wkdisp.children).forEach((c) => wkdisp.removeChild(c));
+				Array.from(wklist.children).forEach((c) => wklist.removeChild(c));
+				const table = Table();
+				wklist.appendChild(table);
+				work.forEach((w, idx) => {
+					const wc = HistoryCard(w.company, w.desc);
+					const space = document.createElement('br');
+					wkdisp.appendChild(wc);
+					wkdisp.appendChild(space);
+					const btn = ItemButton(
+						`work-btn-${idx}`,
+						icons.remove,
+						(ev) => {
+							work.splice(work.indexOf(work.find((v) => v.id == w.id)), 1);
+							updateWork();
+						}
+					)
+					const manip = [
+						ItemButton(`work-up-${idx}`, icons.up, (ev) => {moveWork(w.id, -1)}),
+						ItemButton(`work-dn-${idx}`, icons.down, (ev) => {moveWork(w.id, +1)})
+					]
+					const dsc = document.createElement('label');
+					dsc.innerText = w.company;
+					const sp = TablePair(table);
+					sp[0].appendChild(btn);
+					sp[0].appendChild(manip[0]);
+					sp[0].appendChild(manip[1]);
+					sp[1].appendChild(dsc);
+				});
+			}
+
+			function updatePage() {
+				setParameterByInput('name');
+				setParameterByInput('title');
+				setParameterByInput('education');
+				setParameterByInput('personal');
+				setParameterByInput('contact');
+				updateSkills();
+				updateWork();
+			}
+
+			function move(arr, oldi, newi) {
+				if (newi >= arr.length || newi < 0) return arr;
+				arr.splice(newi, 0, arr.splice(oldi, 1)[0]);
+				return arr;
+			}
+
+			function findIndex(arr, pred) {
+				return arr.indexOf(arr.find(pred))
+			}
+
+			function moveWork(id, offset) {
+				const at = findIndex(work, (v) => v.id == id);
+				work = move(work, at, at + offset);
+				updateWork();
+			}
+
+			function moveSkill(id, offset) {
+				const at = findIndex(skills, (v) => v.id == id);
+				work = move(skills, at, at + offset);
+				updateSkills();
+			}
+
+			function addSkill() {
+				const skin = document.getElementById('skill-in');
+				skills.push(SkillItem(skin.value));
+				updateSkills();
+			}
+
+			function clearSkills() {
+				skills.splice(0, skills.length);
+				updateSkills();
+			}
+
+			function addWork() {
+				const cmpin = document.getElementById('company-in');
+				const dscin = document.getElementById('compdesc-in');
+				work.push(WorkItem(cmpin.value, dscin.value));
+				updateWork();
+			}
+
+			function clearWork() {
+				work.splice(0, work.length);
+				updateWork();
+			}
+
+			function printCurriculum() {
+				updatePage();
+				window.print();
+			}
+
+			function saveFile(data, filename, type) {
+				let file = new Blob([data], {type: type});
+				let
+					a = document.createElement("a"),
+					url = URL.createObjectURL(file)
+				;
+				a.href = url;
+				a.download = filename;
+				document.body.appendChild(a);
+				a.click();
+				setTimeout(function() {
+					document.body.removeChild(a);
+					window.URL.revokeObjectURL(url);  
+				}, 0);
+			}
+
+			function CurriculumData() {
+				updatePage();
+				const data = {
+					name: getInput("name").value,
+					title: getInput("title").value,
+					jobs: work,
+					education: getInput("education").value,
+					skills: skills,
+					personal: getInput("personal").value,
+					contact: getInput("contact").value,
+					_skuuid: skuuid,
+					_wkuuid: wkuuid,
+				};
+				data.toString = (s = null) => {return JSON.stringify(data, null, s);};
+				return data;
+			}
+
+			function saveToLocalStorage() {
+				sessionStorage.setItem('cv-data', CurriculumData().toString());
+			}
+			
+			function loadFromLocalStorage() {
+				const data = sessionStorage.getItem('cv-data');
+				if (data.length) {
+					loadCurriculum(JSON.parse(data));
+				}
+			}
+
+			function saveCurriculum() {
+				updatePage();
+				saveFile(
+					CurriculumData().toString('\t'),
+					"curriculum.json",
+					"application/json"
+				);
+			}
+
+			function loadFile(event) {
+				const file = event.target.files[0];
+				const reader = new FileReader();
+				reader.onloadend = () => {
+					loadCurriculum(JSON.parse(reader.result));
+				};
+				reader.readAsText(file);
+			};
+
+			function loadCurriculum(data) {
+				Object.keys(data).forEach((k) => {
+					if (typeof data[k] === "string")
+						getInput(k).value = data[k];
+				});
+				work	= data["jobs"];
+				wkuuid	= data["_wkuuid"];
+				skills	= data["skills"];
+				skuuid	= data["_skuuid"];
+				updatePage();
+			}
+		</script>
+	</head>
+	<body onload="loadFromLocalStorage()" onbeforeunload="saveToLocalStorage()">
+		<div class="no-print">
+			<div class="cv-settings">
+				<h1>Dados</h1>
+				<button onclick="updatePage()">Atualizar</button><br><br>
+				<label><strong>Nome</strong></label><br>
+				<input id="name-in" oninput="setParameterByInput('name')"><br><br>
+				<label><strong>Título</strong></label><br>
+				<input id="title-in" oninput="setParameterByInput('title')"><br><br>
+				<label><strong>Experiência Profissional</strong></label><br><br>
+				<label><strong>Empresa</strong></label><br>
+				<input id="company-in" type="text"><br>
+				<label><strong>Descrição</strong></label><br>
+				<textarea id="compdesc-in" type="text"></textarea><br>
+				<button id="work-insert" onclick="addWork()">Adicionar</button>
+				<button id="work-clear" onclick="clearWork()">Limpar</button><br><br>
+				<div id="work-list">
+				</div><br><br>
+				<label><strong>Formações Acadêmicas</strong></label><br>
+				<textarea id="education-in" oninput="setParameterByInput('education')" type="text"></textarea><br><br>
+				<label><strong>Habilidades / Competências</strong></label><br>
+				<textarea id="skill-in" type="text"></textarea><br>
+				<button id="skill-insert" onclick="addSkill()">Adicionar</button>
+				<button id="skill-clear" onclick="clearSkills()">Limpar</button><br><br>
+				<div id="skill-list">
+				</div><br><br>
+				<label><strong>Dados Pessoais</strong></label><br>
+				<textarea id="personal-in" oninput="setParameterByInput('personal')" type="text"></textarea><br><br>
+				<label><strong>Contato</strong></label><br>
+				<textarea id="contact-in" oninput="setParameterByInput('contact')" type="text"></textarea><br><br>
+				<hr>
+				<h1>Estilo</h1>
+				<h2>Paleta</h2>
+				<button class="palette-button pb1" onclick="setPalette('#eee', '#aaa')">Paleta 1</button>
+				<button class="palette-button pb2" onclick="setPalette('aliceblue', '#abd')">Paleta 2</button>
+				<button class="palette-button pb3" onclick="setPalette('#f9eeff', '#c9e')">Paleta 3</button>
+				<button class="palette-button nopb" onclick="setPalette('#fff', '#fff')">Só Texto</button>
+				<hr>
+				<input type="file" accept="application/json" id="file-loader" hidden>
+				<button class="print-button" onclick="document.getElementById('file-loader').click()">
+					Carregar
+				</button>
+				<button class="print-button" onclick="saveCurriculum()">
+					Salvar
+				</button>
+				<button class="print-button" onclick="printCurriculum()">
+					Imprimir / PDF
+				</button>
+			</div>
+		</div>
+		<div class="curriculum-vitae">
+			<!-- CV Header -->
+			<header>
+				<h1 id="cv-name-display">
+					YOUR_NAME
+				</h1>
+				<em id="cv-title-display">
+					YOUR_TITLE
+				</em>
+			</header>
+			<hr>
+			<!-- Job History -->
+			<div class="cv-content cv-history">
+				<h2>
+					Experiência Profissional
+				</h2>
+				<!-- Company information -->
+				<div id="cv-history-display" class="cv-history-content">
+					<div class="cv-history-card">
+						<h3>
+							COMPANY_NAME
+						</h3>
+						<p>
+							COMPANY_DESCRIPTION
+						</p>
+					</div>
+				</div>
+			</div>
+			<!-- Stats -->
+			<div class="cv-content">
+				<!-- Academic information -->
+				<div class="cv-info-card">
+					<h2>
+						Formações Acadêmicas
+					</h2>
+					<p id="cv-education-display">
+						YOUR_EDUCATION
+					</p>
+				</div>
+				<hr>
+				<!-- Skill information -->
+				<div class="cv-info-card">	
+					<h2>
+						Habilidades / Competências
+					</h2>
+					<ul id="cv-skill-display">
+						<li>SKILL_1</li>
+						<li>SKILL_2</li>
+						<li>SKILL_3</li>
+					</ul>
+				</div>
+				<hr>
+				<!-- Personal information -->
+				<div class="cv-info-card">
+					<h2>
+						Dados Pessoais
+					</h2>
+					<p id="cv-personal-display">
+						YOUR_INFO
+					</p>
+				</div>
+			</div>
+			<hr>
+			<!-- CV Footer -->
+			<footer>
+				<h2>
+					Contato
+				</h2>
+				<p id="cv-contact-display">
+
+				</p>
+			</footer>
+		</div>
+		<script>
+			document.getElementById("file-loader").addEventListener("change", loadFile);
+		</script>
+	</body>
+</html>

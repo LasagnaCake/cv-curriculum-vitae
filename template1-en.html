@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="pt-BR">
+<html lang="en">
 	<head>
 		<meta charset="utf8">
 		<title>Curriculum Vitae</title>
@@ -216,11 +216,32 @@
 				pr.innerText = ip.value;
 			}
 
+			function Table() {
+				const table = document.createElement('table');
+				table.style = 'width: 100%;';
+				return table;
+			}
+
+			function TablePair(parent) {
+				const pair = [
+					document.createElement('td'),
+					document.createElement('td')
+				];
+				const row = document.createElement('tr');
+				row.appendChild(pair[0]);
+				row.appendChild(pair[1]);
+				parent.appendChild(row);
+				pair[0].style = 'width: 35%; min-height: 64px;';
+				return pair;
+			}
+
 			function updateSkills() {
 				const skdisp = getParameter("skill");
 				const sklist = document.getElementById("skill-list");
 				Array.from(skdisp.children).forEach((c) => skdisp.removeChild(c));
 				Array.from(sklist.children).forEach((c) => sklist.removeChild(c));
+				const table = Table();
+				sklist.appendChild(table);
 				skills.forEach((s, idx) => {
 					const i = document.createElement('li');
 					i.innerText = s.desc;
@@ -230,16 +251,20 @@
 						icons.remove,
 						(ev) => {
 							skills.splice(skills.indexOf(skills.find((v) => v.id == s.id)), 1);
-							sklist.removeChild(document.getElementById(`skill-btn-${idx}`));
 							updateSkills();
 						}
 					);
+					const manip = [
+						ItemButton(`skill-up-${idx}`, icons.up, (ev) => {moveSkill(s.id, -1)}),
+						ItemButton(`skill-dn-${idx}`, icons.down, (ev) => {moveSkill(s.id, +1)})
+					]
 					const dsc = document.createElement('label');
 					dsc.innerText = s.desc;
-					const br = document.createElement('br');
-					sklist.appendChild(btn);
-					sklist.appendChild(dsc);
-					sklist.appendChild(br);
+					const sp = TablePair(table);
+					sp[0].appendChild(btn);
+					sp[0].appendChild(manip[0]);
+					sp[0].appendChild(manip[1]);
+					sp[1].appendChild(dsc);
 				});
 			}
 
@@ -260,6 +285,8 @@
 				const wklist = document.getElementById("work-list");
 				Array.from(wkdisp.children).forEach((c) => wkdisp.removeChild(c));
 				Array.from(wklist.children).forEach((c) => wklist.removeChild(c));
+				const table = Table();
+				wklist.appendChild(table);
 				work.forEach((w, idx) => {
 					const wc = HistoryCard(w.company, w.desc);
 					const space = document.createElement('br');
@@ -270,9 +297,6 @@
 						icons.remove,
 						(ev) => {
 							work.splice(work.indexOf(work.find((v) => v.id == w.id)), 1);
-							wklist.removeChild(document.getElementById(`work-btn-${idx}`));
-							wklist.removeChild(document.getElementById(`work-up-${idx}`));
-							wklist.removeChild(document.getElementById(`work-dn-${idx}`));
 							updateWork();
 						}
 					)
@@ -282,12 +306,11 @@
 					]
 					const dsc = document.createElement('label');
 					dsc.innerText = w.company;
-					const br = document.createElement('br');
-					wklist.appendChild(btn);
-					wklist.appendChild(manip[0]);
-					wklist.appendChild(manip[1]);
-					wklist.appendChild(dsc);
-					wklist.appendChild(br);
+					const sp = TablePair(table);
+					sp[0].appendChild(btn);
+					sp[0].appendChild(manip[0]);
+					sp[0].appendChild(manip[1]);
+					sp[1].appendChild(dsc);
 				});
 			}
 
@@ -315,6 +338,12 @@
 				const at = findIndex(work, (v) => v.id == id);
 				work = move(work, at, at + offset);
 				updateWork();
+			}
+
+			function moveSkill(id, offset) {
+				const at = findIndex(skills, (v) => v.id == id);
+				work = move(skills, at, at + offset);
+				updateSkills();
 			}
 
 			function addSkill() {
@@ -423,50 +452,50 @@
 	<body onload="loadFromLocalStorage()" onbeforeunload="saveToLocalStorage()">
 		<div class="no-print">
 			<div class="cv-settings">
-				<h1>Dados</h1>
-				<button onclick="updatePage()">Atualizar</button><br><br>
-				<label><strong>Nome</strong></label><br>
+				<h1>Data</h1>
+				<button onclick="updatePage()">Update</button><br><br>
+				<label><strong>Name</strong></label><br>
 				<input id="name-in" oninput="setParameterByInput('name')"><br><br>
-				<label><strong>Título</strong></label><br>
+				<label><strong>Title</strong></label><br>
 				<input id="title-in" oninput="setParameterByInput('title')"><br><br>
-				<label><strong>Experiência Profissional</strong></label><br><br>
-				<label><strong>Empresa</strong></label><br>
+				<label><strong>Work History</strong></label><br><br>
+				<label><strong>Company</strong></label><br>
 				<input id="company-in" type="text"><br>
-				<label><strong>Descrição</strong></label><br>
+				<label><strong>Description</strong></label><br>
 				<textarea id="compdesc-in" type="text"></textarea><br>
-				<button id="work-insert" onclick="addWork()">Adicionar</button>
-				<button id="work-clear" onclick="clearWork()">Limpar</button><br><br>
+				<button id="work-insert" onclick="addWork()">Add</button>
+				<button id="work-clear" onclick="clearWork()">Clear</button><br><br>
 				<div id="work-list">
 				</div><br><br>
-				<label><strong>Formações Acadêmicas</strong></label><br>
+				<label><strong>Education</strong></label><br>
 				<textarea id="education-in" oninput="setParameterByInput('education')" type="text"></textarea><br><br>
-				<label><strong>Habilidades</strong></label><br>
+				<label><strong>Skills</strong></label><br>
 				<textarea id="skill-in" type="text"></textarea><br>
-				<button id="skill-insert" onclick="addSkill()">Adicionar</button>
-				<button id="skill-clear" onclick="clearSkills()">Limpar</button><br><br>
+				<button id="skill-insert" onclick="addSkill()">Add</button>
+				<button id="skill-clear" onclick="clearSkills()">Clear</button><br><br>
 				<div id="skill-list">
 				</div><br><br>
-				<label><strong>Dados Pessoais</strong></label><br>
+				<label><strong>Personal Information</strong></label><br>
 				<textarea id="personal-in" oninput="setParameterByInput('personal')" type="text"></textarea><br><br>
-				<label><strong>Contato</strong></label><br>
+				<label><strong>Contact</strong></label><br>
 				<textarea id="contact-in" oninput="setParameterByInput('contact')" type="text"></textarea><br><br>
 				<hr>
-				<h1>Estilo</h1>
-				<h2>Paleta</h2>
-				<button class="palette-button pb1" onclick="setPalette('#eee', '#aaa')">Paleta 1</button>
-				<button class="palette-button pb2" onclick="setPalette('aliceblue', '#abd')">Paleta 2</button>
-				<button class="palette-button pb3" onclick="setPalette('#f9eeff', '#c9e')">Paleta 3</button>
-				<button class="palette-button nopb" onclick="setPalette('#fff', '#fff')">Só Texto</button>
+				<h1>Style</h1>
+				<h2>Palette</h2>
+				<button class="palette-button pb1" onclick="setPalette('#eee', '#aaa')">Palette 1</button>
+				<button class="palette-button pb2" onclick="setPalette('aliceblue', '#abd')">Palette 2</button>
+				<button class="palette-button pb3" onclick="setPalette('#f9eeff', '#c9e')">Palette 3</button>
+				<button class="palette-button nopb" onclick="setPalette('#fff', '#fff')">Text Only</button>
 				<hr>
 				<input type="file" accept="application/json" id="file-loader" hidden>
 				<button class="print-button" onclick="document.getElementById('file-loader').click()">
-					Carregar
+					Load
 				</button>
 				<button class="print-button" onclick="saveCurriculum()">
-					Salvar
+					Save
 				</button>
 				<button class="print-button" onclick="printCurriculum()">
-					Imprimir / PDF
+					Print / PDF
 				</button>
 			</div>
 		</div>
@@ -484,7 +513,7 @@
 			<!-- Job History -->
 			<div class="cv-content cv-history">
 				<h2>
-					Experiência Profissional
+					Work History
 				</h2>
 				<!-- Company information -->
 				<div id="cv-history-display" class="cv-history-content">
@@ -503,7 +532,7 @@
 				<!-- Academic information -->
 				<div class="cv-info-card">
 					<h2>
-						Formações Acadêmicas
+						Education
 					</h2>
 					<p id="cv-education-display">
 						YOUR_EDUCATION
@@ -513,7 +542,7 @@
 				<!-- Skill information -->
 				<div class="cv-info-card">	
 					<h2>
-						Habilidades / Competências
+						Skills
 					</h2>
 					<ul id="cv-skill-display">
 						<li>SKILL_1</li>
@@ -525,7 +554,7 @@
 				<!-- Personal information -->
 				<div class="cv-info-card">
 					<h2>
-						Dados Pessoais
+						Personal Information
 					</h2>
 					<p id="cv-personal-display">
 						YOUR_INFO
@@ -536,7 +565,7 @@
 			<!-- CV Footer -->
 			<footer>
 				<h2>
-					Contato
+					Contact
 				</h2>
 				<p id="cv-contact-display">
 
