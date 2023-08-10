@@ -76,15 +76,6 @@ button:hover {
 	transition: filter .25s;
 	filter: brightness(80%);
 }
-.palette-button {
-	margin: 1vh auto;
-	margin-inline: 1vw;
-	border-style: solid;
-	border-radius: 10px;
-	font-size: 14pt;
-	padding: 1vw;
-	border-width: 5px;
-}
 .print-button {
 	margin: 1vh auto;
 	margin-top: 5vh;
@@ -97,6 +88,16 @@ button:hover {
 	border-color: var(--hr-color);
 	background-color: var(--hr-color);
 	color: black;
+}
+.palette-button {
+	margin: 1vh auto;
+	margin-inline: 1vw;
+	border-style: solid;
+	border-radius: 10px;
+	font-size: 14pt;
+	padding: 1vw;
+	border-width: 5px;
+	width: 37.5%;
 }
 .pb1 {
 	/* Gray */
@@ -127,6 +128,7 @@ button:hover {
 	/* None */
 	background-color: #fff;
 	border-color: #000;
+	width: 80%;
 }
 .spaced-button {
 	margin-right: .5vw;
