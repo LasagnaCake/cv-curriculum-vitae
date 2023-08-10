@@ -22,6 +22,9 @@
 				font-family:Helvetica, Arial, sans-serif;
 				flex-wrap: wrap;
 				font-size: 10pt;
+				-webkit-print-color-adjust: exact !important;
+				color-adjust: exact !important;
+				print-color-adjust: exact !important;
 			}
 			.curriculum-vitae {
 				width: 70vw;
@@ -125,6 +128,11 @@
 				background-color: #f9eeff;
 				border-color: #c9e;
 			}
+			.nopb {
+				/* Purple */
+				background-color: #fff;
+				border-color: #000;
+			}
 			.cv-settings {
 				width: 90%;
 				text-align: center;
@@ -157,6 +165,7 @@
 			}
 		</style>
 		<script>
+			"use strict";
 			let skills = [];
 			let work = [];
 			let skuuid = 0;
@@ -182,6 +191,10 @@
 
 			function getParameter(param) {
 				return document.getElementById(`cv-${param}-display`);
+			}
+
+			function getInput(input) {
+				return document.getElementById(`${input}-in`);
 			}
 
 			function setParameter(param, val) {
@@ -274,6 +287,7 @@
 				setParameterByInput('title');
 				setParameterByInput('education');
 				setParameterByInput('personal');
+				setParameterByInput('contact');
 				updateSkills();
 				updateWork();
 			}
@@ -321,12 +335,69 @@
 				updatePage();
 				window.print();
 			}
+
+			function saveFile(data, filename, type) {
+				let file = new Blob([data], {type: type});
+				let
+					a = document.createElement("a"),
+					url = URL.createObjectURL(file)
+				;
+				a.href = url;
+				a.download = filename;
+				document.body.appendChild(a);
+				a.click();
+				setTimeout(function() {
+					document.body.removeChild(a);
+					window.URL.revokeObjectURL(url);  
+				}, 0);
+			}
+
+			function saveCurriculum() {
+				updatePage();
+				const data = {
+					name: getInput("name").value,
+					title: getInput("title").value,
+					jobs: work,
+					education: getInput("education").value,
+					skills: skills,
+					personal: getInput("personal").value,
+					contact: getInput("contact").value,
+					_skuuid: skuuid,
+					_wkuuid: wkuuid,
+				}
+				saveFile(
+					JSON.stringify(data, null, '\t'),
+					"curriculum.json",
+					"application/json"
+				);
+			}
+
+			function loadFile(event) {
+				const file = event.target.files[0];
+				const reader = new FileReader();
+				reader.onloadend = () => {
+					loadCurriculum(JSON.parse(reader.result));
+				};
+				reader.readAsText(file);
+			};
+
+			function loadCurriculum(data) {
+				Object.keys(data).forEach((k) => {
+					if (typeof data[k] === "string")
+						getInput(k).value = data[k];
+				});
+				work	= data["jobs"];
+				wkuuid	= data["_wkuuid"];
+				skills	= data["skills"];
+				skuuid	= data["_skuuid"];
+				updatePage();
+			}
 		</script>
 	</head>
 	<body>
 		<div class="no-print">
 			<div class="cv-settings" onload="updatePage()">
-				<h1>Info</h1>
+				<h1>Dados</h1>
 				<button onclick="updatePage()">Atualizar</button><br><br>
 				<label><strong>Nome</strong></label><br>
 				<input id="name-in" oninput="setParameterByInput('name')"><br><br>
@@ -354,14 +425,22 @@
 				<label><strong>Contato</strong></label><br>
 				<textarea id="contact-in" oninput="setParameterByInput('contact')" type="text"></textarea><br><br>
 				<hr>
-				<h1>Style</h1>
-				<h2>Palette</h2>
-				<button class="palette-button pb1" onclick="setPalette('#eee', '#aaa')">Palette 1</button>
-				<button class="palette-button pb2" onclick="setPalette('aliceblue', '#abd')">Palette 2</button>
-				<button class="palette-button pb3" onclick="setPalette('#f9eeff', '#c9e')">Palette 3</button>
+				<h1>Estilo</h1>
+				<h2>Paleta</h2>
+				<button class="palette-button pb1" onclick="setPalette('#eee', '#aaa')">Paleta 1</button>
+				<button class="palette-button pb2" onclick="setPalette('aliceblue', '#abd')">Paleta 2</button>
+				<button class="palette-button pb3" onclick="setPalette('#f9eeff', '#c9e')">Paleta 3</button>
+				<button class="palette-button nopb" onclick="setPalette('#fff', '#fff')">Só Texto</button>
 				<hr>
+				<input type="file" accept="application/json" id="file-loader" hidden>
+				<button class="print-button" onclick="document.getElementById('file-loader').click()">
+					Carregar
+				</button>
+				<button class="print-button" onclick="saveCurriculum()">
+					Salvar
+				</button>
 				<button class="print-button" onclick="printCurriculum()">
-					Print!
+					Imprimir / PDF
 				</button>
 			</div>
 		</div>
@@ -438,5 +517,8 @@
 				</p>
 			</footer>
 		</div>
+		<script>
+			document.getElementById("file-loader").addEventListener("change", loadFile);
+		</script>
 	</body>
 </html>
