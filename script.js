@@ -210,6 +210,7 @@ function addSkill() {
 
 function clearSkills() {
 	skills.splice(0, skills.length);
+	skuuid = 0;
 	updateSkills();
 }
 
@@ -222,6 +223,7 @@ function addWork() {
 
 function clearWork() {
 	work.splice(0, work.length);
+	wkuuid = 0;
 	updateWork();
 }
 
