@@ -14,18 +14,10 @@ body {
 	justify-content: center;
 	font-family:Helvetica, Arial, sans-serif;
 	flex-wrap: wrap;
-	font-size: 10pt;
+	font-size: 12pt;
 	-webkit-print-color-adjust: exact !important;
 	color-adjust: exact !important;
 	print-color-adjust: exact !important;
-}
-.curriculum-vitae {
-	width: 70vw;
-	display: flex;
-	justify-content: center;
-	font-family:Helvetica, Arial, sans-serif;
-	flex-wrap: wrap;
-	font-size: 10pt;
 }
 header, footer {
 	width: 90%;
@@ -126,19 +118,15 @@ button:hover {
 	background-color: #f9eeee;
 	border-color: #ebb;
 }
+.pb5 {
+	/* Green */
+	background-color: #eef9ee;
+	border-color: #aea;
+}
 .nopb {
 	/* None */
 	background-color: #fff;
 	border-color: #000;
-}
-.cv-settings {
-	width: 90%;
-	text-align: center;
-	background-color: var(--bg-color);
-	border-radius: 10px;
-	margin: 1.5vh auto;
-	padding: 1vw 1vw;
-	padding-bottom: 2vh;
 }
 .spaced-button {
 	margin-right: .5vw;
@@ -152,8 +140,22 @@ textarea {
 	width: 80%;
 	min-height: 100px;
 }
-.no-print {
+.curriculum-vitae {
+	width: 70vw;
+	display: flex;
+	justify-content: center;
+	font-family:Helvetica, Arial, sans-serif;
+	flex-wrap: wrap;
+	font-size: 12pt;
+}
+.cv-settings {
 	width: 20vw;
+	text-align: center;
+	background-color: var(--bg-color);
+	border-radius: 10px;
+	margin: 1.5vh auto;
+	padding: 1vw 1vw;
+	padding-bottom: 2vh;
 }
 @media print {
 	.no-print {
@@ -161,5 +163,6 @@ textarea {
 	}
 	.curriculum-vitae {
 		width: 100vw;
+		font-size: 10pt;
 	}
 }

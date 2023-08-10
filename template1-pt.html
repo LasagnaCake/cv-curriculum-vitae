@@ -12,41 +12,43 @@
 			<div class="cv-settings">
 				<h1>Dados</h1>
 				<button onclick="updatePage()">Atualizar</button><br><br>
-				<label><strong>Nome</strong></label><br>
+				<label for="name-in"><strong>Nome</strong></label><br>
 				<input id="name-in" oninput="setParameterByInput('name')"><br><br>
-				<label><strong>Título</strong></label><br>
+				<label for="title-in"><strong>Título</strong></label><br>
 				<input id="title-in" oninput="setParameterByInput('title')"><br><br>
-				<label><strong>Experiência Profissional</strong></label><br><br>
-				<label><strong>Empresa</strong></label><br>
+				<strong>Experiência Profissional</strong><br><br>
+				<label for="company-in"><strong>Empresa</strong></label><br>
 				<input id="company-in" type="text"><br>
-				<label><strong>Descrição</strong></label><br>
+				<label for="compdesc-in"><strong>Descrição</strong></label><br>
 				<textarea id="compdesc-in" type="text"></textarea><br>
 				<button id="work-insert" onclick="addWork()">Adicionar</button>
 				<button id="work-clear" onclick="clearWork()">Limpar</button><br><br>
 				<div id="work-list">
 				</div><br><br>
-				<label><strong>Formações Acadêmicas</strong></label><br>
+				<label for="education-in"><strong>Formações Acadêmicas</strong></label><br>
 				<textarea id="education-in" oninput="setParameterByInput('education')" type="text"></textarea><br><br>
-				<label><strong>Habilidades / Competências</strong></label><br>
+				<label for="skill-in"><strong>Habilidades / Competências</strong></label><br>
 				<textarea id="skill-in" type="text"></textarea><br>
 				<button id="skill-insert" onclick="addSkill()">Adicionar</button>
 				<button id="skill-clear" onclick="clearSkills()">Limpar</button><br><br>
 				<div id="skill-list">
 				</div><br><br>
-				<label><strong>Dados Pessoais</strong></label><br>
+				<label for="personal-in"><strong>Dados Pessoais</strong></label><br>
 				<textarea id="personal-in" oninput="setParameterByInput('personal')" type="text"></textarea><br><br>
-				<label><strong>Contato</strong></label><br>
+				<label for="contact-in"><strong>Contato</strong></label><br>
 				<textarea id="contact-in" oninput="setParameterByInput('contact')" type="text"></textarea><br><br>
 				<hr>
 				<h1>Estilo</h1>
 				<h2>Paleta</h2>
-				<button class="palette-button pb1" id="pb1" onclick="setPalette('pb1')">Paleta 1</button>
-				<button class="palette-button pb2" id="pb2" onclick="setPalette('pb2')">Paleta 2</button>
-				<button class="palette-button pb3" id="pb3" onclick="setPalette('pb3')">Paleta 3</button>
-				<button class="palette-button pb4" id="pb4" onclick="setPalette('pb4')">Paleta 4</button>
-				<button class="palette-button nopb" id="nopb" onclick="setPalette(null)">Só Texto</button>
+				<button class="palette-button pb1" onclick="setPalette('pb1')">Paleta 1</button>
+				<button class="palette-button pb2" onclick="setPalette('pb2')">Paleta 2</button>
+				<button class="palette-button pb3" onclick="setPalette('pb3')">Paleta 3</button>
+				<button class="palette-button pb4" onclick="setPalette('pb4')">Paleta 4</button>
+				<button class="palette-button pb5" onclick="setPalette('pb5')">Paleta 5</button>
+				<button class="palette-button nopb" onclick="setPalette(null)">Só Texto</button>
 				<hr>
 				<input type="file" accept="application/json" id="file-loader" hidden>
+				<label for="file-loader" hidden>FileLoader</label>
 				<button class="print-button" onclick="document.getElementById('file-loader').click()">
 					Carregar
 				</button>

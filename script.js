@@ -9,6 +9,9 @@
 				remove: '☓',
 				up: '⏶',
 				down: '⏷',
+				edit: '✎',
+				work: '✪',
+				skill: '✪',
 			};
 			
 			const SkillItem = (desc) => {return {id: skuuid++, desc: desc}};
@@ -53,23 +56,39 @@
 				pr.innerText = ip.value;
 			}
 
-			function Table() {
-				const table = document.createElement('table');
-				table.style = 'width: 100%;';
-				return table;
+			function TablePair(parent, type, containerStyle) {
+				const pair = [
+					document.createElement(type),
+					document.createElement(type)
+				];
+				const container = document.createElement('tr');
+				container.appendChild(pair[0]);
+				container.appendChild(pair[1]);
+				parent.appendChild(container);
+				container.style = containerStyle;
+				pair[0].style = 'width: 35%; min-height: 64px;';
+				pair[1].style = 'width: 60%; min-height: 64px;';
+				return pair;
+			}
+		
+			function HeaderPair(parent) {
+				const pair = TablePair(parent, 'th');
+				pair[0].style = 'width: 35%; height: 32px; font-size: 18pt;';
+				pair[1].style = 'width: 60%; height: 32px; font-size: 18pt;';
+				return pair;
 			}
 
-			function TablePair(parent) {
-				const pair = [
-					document.createElement('td'),
-					document.createElement('td')
-				];
-				const row = document.createElement('tr');
-				row.appendChild(pair[0]);
-				row.appendChild(pair[1]);
-				parent.appendChild(row);
-				pair[0].style = 'width: 35%; min-height: 64px;';
-				return pair;
+			function RowPair(parent) {
+				return TablePair(parent, 'td');
+			}
+			
+			function DataTable(name) {
+				const table = document.createElement('table');
+				table.style = 'width: 100%;';
+				const pair = HeaderPair(table);
+				pair[0].innerText = icons.edit;
+				pair[1].innerText = name;
+				return table;
 			}
 
 			function updateSkills() {
@@ -77,7 +96,7 @@
 				const sklist = document.getElementById("skill-list");
 				Array.from(skdisp.children).forEach((c) => skdisp.removeChild(c));
 				Array.from(sklist.children).forEach((c) => sklist.removeChild(c));
-				const table = Table();
+				const table = DataTable(icons.skill);
 				sklist.appendChild(table);
 				skills.forEach((s, idx) => {
 					const i = document.createElement('li');
@@ -95,9 +114,9 @@
 						ItemButton(`skill-up-${idx}`, icons.up, (ev) => {moveSkill(s.id, -1)}),
 						ItemButton(`skill-dn-${idx}`, icons.down, (ev) => {moveSkill(s.id, +1)})
 					]
-					const dsc = document.createElement('label');
+					const dsc = document.createElement('span');
 					dsc.innerText = s.desc;
-					const sp = TablePair(table);
+					const sp = RowPair(table);
 					sp[0].appendChild(btn);
 					sp[0].appendChild(manip[0]);
 					sp[0].appendChild(manip[1]);
@@ -122,7 +141,7 @@
 				const wklist = document.getElementById("work-list");
 				Array.from(wkdisp.children).forEach((c) => wkdisp.removeChild(c));
 				Array.from(wklist.children).forEach((c) => wklist.removeChild(c));
-				const table = Table();
+				const table = DataTable(icons.work);
 				wklist.appendChild(table);
 				work.forEach((w, idx) => {
 					const wc = HistoryCard(w.company, w.desc);
@@ -141,9 +160,9 @@
 						ItemButton(`work-up-${idx}`, icons.up, (ev) => {moveWork(w.id, -1)}),
 						ItemButton(`work-dn-${idx}`, icons.down, (ev) => {moveWork(w.id, +1)})
 					]
-					const dsc = document.createElement('label');
+					const dsc = document.createElement('span');
 					dsc.innerText = w.company;
-					const sp = TablePair(table);
+					const sp = RowPair(table);
 					sp[0].appendChild(btn);
 					sp[0].appendChild(manip[0]);
 					sp[0].appendChild(manip[1]);

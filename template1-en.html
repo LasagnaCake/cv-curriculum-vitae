@@ -12,41 +12,43 @@
 			<div class="cv-settings">
 				<h1>Data</h1>
 				<button onclick="updatePage()">Update</button><br><br>
-				<label><strong>Name</strong></label><br>
+				<label for="name-in"><strong>Name</strong></label><br>
 				<input id="name-in" oninput="setParameterByInput('name')"><br><br>
-				<label><strong>Title</strong></label><br>
+				<label for="title-in"><strong>Title</strong></label><br>
 				<input id="title-in" oninput="setParameterByInput('title')"><br><br>
-				<label><strong>Work History</strong></label><br><br>
-				<label><strong>Company</strong></label><br>
+				<strong>Work History</strong><br><br>
+				<label for="company-in"><strong>Company</strong></label><br>
 				<input id="company-in" type="text"><br>
-				<label><strong>Description</strong></label><br>
+				<label for="compdesc-in"><strong>Description</strong></label><br>
 				<textarea id="compdesc-in" type="text"></textarea><br>
 				<button id="work-insert" onclick="addWork()">Add</button>
 				<button id="work-clear" onclick="clearWork()">Clear</button><br><br>
 				<div id="work-list">
 				</div><br><br>
-				<label><strong>Education</strong></label><br>
+				<label for="education-in"><strong>Education</strong></label><br>
 				<textarea id="education-in" oninput="setParameterByInput('education')" type="text"></textarea><br><br>
-				<label><strong>Skills</strong></label><br>
+				<label for="skill-in"><strong>Skills</strong></label><br>
 				<textarea id="skill-in" type="text"></textarea><br>
 				<button id="skill-insert" onclick="addSkill()">Add</button>
 				<button id="skill-clear" onclick="clearSkills()">Clear</button><br><br>
 				<div id="skill-list">
 				</div><br><br>
-				<label><strong>Personal Information</strong></label><br>
+				<label for="personal-in"><strong>Personal Information</strong></label><br>
 				<textarea id="personal-in" oninput="setParameterByInput('personal')" type="text"></textarea><br><br>
-				<label><strong>Contact</strong></label><br>
+				<label for="contact-in"><strong>Contact</strong></label><br>
 				<textarea id="contact-in" oninput="setParameterByInput('contact')" type="text"></textarea><br><br>
 				<hr>
 				<h1>Style</h1>
 				<h2>Palette</h2>
-				<button class="palette-button pb1" id="pb1" onclick="setPalette('pb1')">Paleta 1</button>
-				<button class="palette-button pb2" id="pb2" onclick="setPalette('pb2')">Paleta 2</button>
-				<button class="palette-button pb3" id="pb3" onclick="setPalette('pb3')">Paleta 3</button>
-				<button class="palette-button pb4" id="pb4" onclick="setPalette('pb4')">Paleta 4</button>
-				<button class="palette-button nopb" id="nopb" onclick="setPalette(null)">Só Texto</button>
+				<button class="palette-button pb1" onclick="setPalette('pb1')">Palette 1</button>
+				<button class="palette-button pb2" onclick="setPalette('pb2')">Palette 2</button>
+				<button class="palette-button pb3" onclick="setPalette('pb3')">Palette 3</button>
+				<button class="palette-button pb4" onclick="setPalette('pb4')">Palette 4</button>
+				<button class="palette-button pb5" onclick="setPalette('pb5')">Palette 5</button>
+				<button class="palette-button nopb" onclick="setPalette(null)">Text Only</button>
 				<hr>
 				<input type="file" accept="application/json" id="file-loader" hidden>
+				<label for="file-loader" hidden>FileLoader</label>
 				<button class="print-button" onclick="document.getElementById('file-loader').click()">
 					Load
 				</button>
