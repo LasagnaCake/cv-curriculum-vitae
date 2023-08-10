@@ -27,7 +27,25 @@ body {
 	margin: 2vh auto;
 	transition: box-shadow .25s;
 	text-decoration: none;
+	overflow: hidden;
 	color: black;
+}
+
+.page-card-title {
+	width: 100%;
+	height: 15%;
+	text-align: center;
+	margin-top: -3px;
+	border-top: 10px solid #ddf;
+	border-bottom: 10px solid #ddf;
+	background-color: #ddf;
+}
+
+.page-card-image {
+	width: 120%;
+	margin-top: -10%;
+	margin-left: -10%;
+	filter: blur(20%);
 }
 
 .page-card:hover {

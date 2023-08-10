@@ -3,7 +3,7 @@
 let templateDisplay = document.getElementById("template-display");
 
 let templates = [
-	TemplateCardData("Simple", "", `templates/template1-${lang}.html`),
+	TemplateCardData("Simple", "images/template1.png", `templates/template1-${lang}.html`),
 ]
 
 function TemplateCardData(title, image, href) {
@@ -21,7 +21,9 @@ function TemplateCard(title, image, href) {
 		image: document.createElement('img')
 	};
 	card.title.innerText = title;
+	card.title.classList.add('page-card-title');
 	card.image.src = image;
+	card.image.classList.add('page-card-image');
 	card.card.href = href;
 	card.card.classList.add('page-card');
 	card.card.appendChild(card.title);
