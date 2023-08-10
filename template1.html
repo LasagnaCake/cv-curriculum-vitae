@@ -149,8 +149,10 @@
 				width: 80%;
 			}
 			textarea {
+				min-width: 80%;
 				max-width: 80%;
 				width: 80%;
+				min-height: 100px;
 			}
 			.no-print {
 				width: 20vw;
@@ -170,6 +172,13 @@
 			let work = [];
 			let skuuid = 0;
 			let wkuuid = 0;
+
+			const icons = {
+				add: '+',
+				remove: '☓',
+				up: '⏶',
+				down: '⏷',
+			};
 			
 			const SkillItem = (desc) => {return {id: skuuid++, desc: desc}};
 			const WorkItem = (company, desc) => {return {id: wkuuid++, company: company, desc: desc}};
@@ -218,7 +227,7 @@
 					skdisp.appendChild(i);
 					const btn = ItemButton (
 						`skill-btn-${idx}`,
-						"-",
+						icons.remove,
 						(ev) => {
 							skills.splice(skills.indexOf(skills.find((v) => v.id == s.id)), 1);
 							sklist.removeChild(document.getElementById(`skill-btn-${idx}`));
@@ -258,18 +267,18 @@
 					wkdisp.appendChild(space);
 					const btn = ItemButton(
 						`work-btn-${idx}`,
-						"-",
+						icons.remove,
 						(ev) => {
 							work.splice(work.indexOf(work.find((v) => v.id == w.id)), 1);
 							wklist.removeChild(document.getElementById(`work-btn-${idx}`));
-							wklist.removeChild(document.getElementById(`work-▲-${idx}`));
-							wklist.removeChild(document.getElementById(`work-▼-${idx}`));
+							wklist.removeChild(document.getElementById(`work-up-${idx}`));
+							wklist.removeChild(document.getElementById(`work-dn-${idx}`));
 							updateWork();
 						}
 					)
 					const manip = [
-						ItemButton(`work-▲-${idx}`, `▲`, (ev) => {moveWork(w.id, -1)}),
-						ItemButton(`work-▼-${idx}`, `▼`, (ev) => {moveWork(w.id, +1)})
+						ItemButton(`work-up-${idx}`, icons.up, (ev) => {moveWork(w.id, -1)}),
+						ItemButton(`work-dn-${idx}`, icons.down, (ev) => {moveWork(w.id, +1)})
 					]
 					const dsc = document.createElement('label');
 					dsc.innerText = w.company;
