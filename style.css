@@ -1,0 +1,165 @@
+:root {
+	/* Gray */
+	--bg-color: #eee;
+	--hr-color: #aaa;
+	/* Blue */
+	--bg-color: aliceblue;
+	--hr-color: #abd;
+	/* Purple */
+	--bg-color: #f9eeff;
+	--hr-color: #c9e;
+}
+body {
+	display: flex;
+	justify-content: center;
+	font-family:Helvetica, Arial, sans-serif;
+	flex-wrap: wrap;
+	font-size: 10pt;
+	-webkit-print-color-adjust: exact !important;
+	color-adjust: exact !important;
+	print-color-adjust: exact !important;
+}
+.curriculum-vitae {
+	width: 70vw;
+	display: flex;
+	justify-content: center;
+	font-family:Helvetica, Arial, sans-serif;
+	flex-wrap: wrap;
+	font-size: 10pt;
+}
+header, footer {
+	width: 90%;
+	text-align: center;
+	background-color: var(--bg-color);
+	border-radius: 10px;
+	margin: 1.5vh auto;
+	padding: 1vw 1vw;
+	padding-bottom: 2vh;
+}
+hr {
+	width:92%;
+	height: 4px;
+	background-color: var(--hr-color);
+	border-radius: 5px;
+	border: none;
+}
+.cv-content {
+	width: 42%;
+	margin: 1.5vh auto;
+	margin-inline: 2%;
+	display: block;
+	text-align: center;
+	background-color: var(--bg-color);
+	border-radius: 10px;
+	padding: 1vh 1vw;
+}
+.cv-history {
+	width: 44%;
+	border-radius: 0px;
+	background-color: white;
+	padding: 0 0;
+}
+.cv-history-card {
+	width: 98%;
+	background-color: var(--bg-color);
+	border-radius: 10px;
+	padding: 1vw;
+}
+.cv-info-card {
+	width: 100%;
+	margin-bottom: 2.5vh;
+}
+ul {
+	text-align: justify;
+	list-style-type: "► ";
+	list-style-position: outside;
+	line-height:150%;
+	padding-right: 2vw;
+}
+p {
+	text-align: justify;
+	padding: 0 2vw;
+}
+button:hover {
+	transition: filter .25s;
+	filter: brightness(80%);
+}
+.palette-button {
+	margin: 1vh auto;
+	margin-inline: 1vw;
+	border-style: solid;
+	border-radius: 10px;
+	font-size: 14pt;
+	padding: 1vw;
+	border-width: 5px;
+}
+.print-button {
+	margin: 1vh auto;
+	margin-top: 5vh;
+	border-style: solid;
+	border-radius: 10px;
+	font-size: 18pt;
+	padding: 1vw 1vw;
+	width: 75%;
+	border-width: 5px;
+	border-color: var(--hr-color);
+	background-color: var(--hr-color);
+	color: black;
+}
+.pb1 {
+	/* Gray */
+	background-color: #eee;
+	border-color: #aaa;
+}
+.pb2 {
+	/* Blue */
+	background-color: aliceblue;
+	border-color: #abd;
+}
+.pb3 {
+	/* Purple */
+	background-color: #f9eeff;
+	border-color: #c9e;
+}
+.pb4 {
+	/* Red */
+	background-color: #f9eeee;
+	border-color: #ebb;
+}
+.nopb {
+	/* None */
+	background-color: #fff;
+	border-color: #000;
+}
+.cv-settings {
+	width: 90%;
+	text-align: center;
+	background-color: var(--bg-color);
+	border-radius: 10px;
+	margin: 1.5vh auto;
+	padding: 1vw 1vw;
+	padding-bottom: 2vh;
+}
+.spaced-button {
+	margin-right: .5vw;
+}
+input {
+	width: 80%;
+}
+textarea {
+	min-width: 80%;
+	max-width: 80%;
+	width: 80%;
+	min-height: 100px;
+}
+.no-print {
+	width: 20vw;
+}
+@media print {
+	.no-print {
+		display: none;
+	}
+	.curriculum-vitae {
+		width: 100vw;
+	}
+}
