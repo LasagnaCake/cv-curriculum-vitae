@@ -9,6 +9,7 @@
 	--bg-color: #f9eeff;
 	--hr-color: #c9e;
 }
+
 body {
 	display: flex;
 	justify-content: center;
@@ -19,6 +20,7 @@ body {
 	color-adjust: exact !important;
 	print-color-adjust: exact !important;
 }
+
 header, footer {
 	width: 90%;
 	text-align: center;
@@ -28,6 +30,7 @@ header, footer {
 	padding: 1vw 1vw;
 	padding-bottom: 2vh;
 }
+
 hr {
 	width:92%;
 	height: 4px;
@@ -35,6 +38,7 @@ hr {
 	border-radius: 5px;
 	border: none;
 }
+
 .cv-content {
 	width: 42%;
 	margin: 1.5vh auto;
@@ -45,22 +49,26 @@ hr {
 	border-radius: 10px;
 	padding: 1vh 1vw;
 }
+
 .cv-history {
 	width: 44%;
 	border-radius: 0px;
 	background-color: white;
 	padding: 0 0;
 }
+
 .cv-history-card {
 	width: 98%;
 	background-color: var(--bg-color);
 	border-radius: 10px;
 	padding: 1vw;
 }
+
 .cv-info-card {
 	width: 100%;
 	margin-bottom: 2.5vh;
 }
+
 ul {
 	text-align: justify;
 	list-style-type: "► ";
@@ -68,14 +76,17 @@ ul {
 	line-height:150%;
 	padding-right: 2vw;
 }
+
 p {
 	text-align: justify;
 	padding: 0 2vw;
 }
+
 button:hover {
 	transition: filter .25s;
 	filter: brightness(80%);
 }
+
 .print-button {
 	margin: 1vh auto;
 	margin-top: 5vh;
@@ -89,6 +100,7 @@ button:hover {
 	background-color: var(--hr-color);
 	color: black;
 }
+
 .palette-button {
 	margin: 1vh auto;
 	margin-inline: 1vw;
@@ -99,49 +111,59 @@ button:hover {
 	border-width: 5px;
 	width: 37.5%;
 }
+
 .pb1 {
 	/* Gray */
 	background-color: #eee;
 	border-color: #aaa;
 }
+
 .pb2 {
 	/* Blue */
 	background-color: aliceblue;
 	border-color: #abd;
 }
+
 .pb3 {
 	/* Purple */
 	background-color: #f9eeff;
 	border-color: #c9e;
 }
+
 .pb4 {
 	/* Red */
 	background-color: #f9eeee;
 	border-color: #ebb;
 }
+
 .pb5 {
 	/* Green */
 	background-color: #eef9ee;
 	border-color: #aea;
 }
+
 .nopb {
 	/* None */
 	background-color: #fff;
 	border-color: #000;
 	width: 80%;
 }
+
 .spaced-button {
 	margin-right: .5vw;
 }
+
 input {
 	width: 80%;
 }
+
 textarea {
 	min-width: 80%;
 	max-width: 80%;
 	width: 80%;
 	min-height: 100px;
 }
+
 .curriculum-vitae {
 	width: 70vw;
 	display: flex;
@@ -150,6 +172,7 @@ textarea {
 	flex-wrap: wrap;
 	font-size: 12pt;
 }
+
 .cv-settings {
 	width: 20vw;
 	text-align: center;
@@ -159,10 +182,12 @@ textarea {
 	padding: 1vw 1vw;
 	padding-bottom: 2vh;
 }
+
 @media print {
 	.no-print {
 		display: none;
 	}
+	
 	.curriculum-vitae {
 		width: 100vw;
 		font-size: 10pt;
