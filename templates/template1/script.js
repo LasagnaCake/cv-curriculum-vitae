@@ -14,6 +14,8 @@ const icons = {
 	skill: '✪',
 };
 
+// Objects
+
 const SkillItem = (desc) => {return {id: skuuid++, desc: desc}};
 const WorkItem = (company, desc) => {return {id: wkuuid++, company: company, desc: desc}};
 
@@ -33,6 +35,8 @@ function CurriculumData() {
 	data.toString = (s = null) => {return JSON.stringify(data, null, s);};
 	return data;
 }
+
+// Components
 
 function ItemButton(id, text, onclick) {
 	const btn = document.createElement('button');
@@ -89,6 +93,8 @@ function HistoryCard(company, desc) {
 	dsc.innerText = desc;
 	return hc;
 }
+
+// Functions
 
 function setPalette(palette) {
 	const docstyle = document.documentElement.style;
