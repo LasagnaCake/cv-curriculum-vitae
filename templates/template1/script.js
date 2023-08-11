@@ -17,6 +17,23 @@ const icons = {
 const SkillItem = (desc) => {return {id: skuuid++, desc: desc}};
 const WorkItem = (company, desc) => {return {id: wkuuid++, company: company, desc: desc}};
 
+function CurriculumData() {
+	updatePage();
+	const data = {
+		name: getInput("name").value,
+		title: getInput("title").value,
+		jobs: work,
+		education: getInput("education").value,
+		skills: skills,
+		personal: getInput("personal").value,
+		contact: getInput("contact").value,
+		_skuuid: skuuid,
+		_wkuuid: wkuuid,
+	};
+	data.toString = (s = null) => {return JSON.stringify(data, null, s);};
+	return data;
+}
+
 function ItemButton(id, text, onclick) {
 	const btn = document.createElement('button');
 	btn.id = id;
@@ -24,36 +41,6 @@ function ItemButton(id, text, onclick) {
 	btn.onclick = onclick;
 	btn.classList.add('spaced-button');
 	return btn;
-}
-
-function setPalette(palette) {
-	const docstyle = document.documentElement.style;
-	if (palette === null) {
-		docstyle.setProperty("--bg-color", "#fff");
-		docstyle.setProperty("--hr-color", "#fff");
-	} else {
-		const style = getComputedStyle(document.querySelector(`.${palette}`));
-		docstyle.setProperty("--bg-color", style.backgroundColor);
-		docstyle.setProperty("--hr-color", style.borderColor);
-	}
-}
-
-function getParameter(param) {
-	return document.getElementById(`cv-${param}-display`);
-}
-
-function getInput(input) {
-	return document.getElementById(`${input}-in`);
-}
-
-function setParameter(param, val) {
-	getParameter(param).innerText = value;
-}
-
-function setParameterByInput(param) {
-	const ip = document.getElementById(`${param}-in`);
-	const pr = getParameter(param);
-	pr.innerText = ip.value;
 }
 
 function TablePair(parent, type, containerStyle) {
@@ -91,6 +78,48 @@ function DataTable(name) {
 	return table;
 }
 
+function HistoryCard(company, desc) {
+	const hc = document.createElement('div');
+	hc.className = "cv-history-card";
+	const cmp = document.createElement('h3');
+	const dsc = document.createElement('p');
+	hc.appendChild(cmp);
+	hc.appendChild(dsc);
+	cmp.innerText = company;
+	dsc.innerText = desc;
+	return hc;
+}
+
+function setPalette(palette) {
+	const docstyle = document.documentElement.style;
+	if (palette === null) {
+		docstyle.setProperty("--bg-color", "#fff");
+		docstyle.setProperty("--hr-color", "#fff");
+	} else {
+		const style = getComputedStyle(document.querySelector(`.${palette}`));
+		docstyle.setProperty("--bg-color", style.backgroundColor);
+		docstyle.setProperty("--hr-color", style.borderColor);
+	}
+}
+
+function getParameter(param) {
+	return document.getElementById(`cv-${param}-display`);
+}
+
+function getInput(input) {
+	return document.getElementById(`${input}-in`);
+}
+
+function setParameter(param, val) {
+	getParameter(param).innerText = value;
+}
+
+function setParameterByInput(param) {
+	const ip = document.getElementById(`${param}-in`);
+	const pr = getParameter(param);
+	pr.innerText = ip.value;
+}
+
 function updateSkills() {
 	const skdisp = getParameter("skill");
 	const sklist = document.getElementById("skill-list");
@@ -122,18 +151,6 @@ function updateSkills() {
 		sp[0].appendChild(manip[1]);
 		sp[1].appendChild(dsc);
 	});
-}
-
-function HistoryCard(company, desc) {
-	const hc = document.createElement('div');
-	hc.className = "cv-history-card";
-	const cmp = document.createElement('h3');
-	const dsc = document.createElement('p');
-	hc.appendChild(cmp);
-	hc.appendChild(dsc);
-	cmp.innerText = company;
-	dsc.innerText = desc;
-	return hc;
 }
 
 function updateWork() {
@@ -246,23 +263,6 @@ function saveFile(data, filename, type) {
 		document.body.removeChild(a);
 		window.URL.revokeObjectURL(url);  
 	}, 0);
-}
-
-function CurriculumData() {
-	updatePage();
-	const data = {
-		name: getInput("name").value,
-		title: getInput("title").value,
-		jobs: work,
-		education: getInput("education").value,
-		skills: skills,
-		personal: getInput("personal").value,
-		contact: getInput("contact").value,
-		_skuuid: skuuid,
-		_wkuuid: wkuuid,
-	};
-	data.toString = (s = null) => {return JSON.stringify(data, null, s);};
-	return data;
 }
 
 function saveToLocalStorage() {
