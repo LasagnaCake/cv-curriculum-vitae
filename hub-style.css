@@ -24,11 +24,16 @@ body {
 	box-shadow: 8px 8px 16px -8px rgba(0, 0, 0, .75);
 	width: 20vw;
 	height: 15vw;
+	min-width: 300px;
+	min-height: 220px;
 	margin: 2vh auto;
 	transition: box-shadow .25s;
 	text-decoration: none;
 	overflow: hidden;
 	color: black;
+	background-size: cover;
+	background-position: 0 -90%;
+	background-repeat: repeat-y;
 }
 
 .page-card-title {
@@ -39,13 +44,7 @@ body {
 	border-top: 10px solid #ddf;
 	border-bottom: 10px solid #ddf;
 	background-color: #ddf;
-}
-
-.page-card-image {
-	width: 120%;
-	margin-top: -10%;
-	margin-left: -10%;
-	filter: blur(20%);
+	padding-top: 5%;
 }
 
 .page-card:hover {

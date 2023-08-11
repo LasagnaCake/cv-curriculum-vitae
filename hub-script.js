@@ -17,17 +17,14 @@ function TemplateCardData(title, image, href) {
 function TemplateCard(title, image, href) {
 	const card = {
 		card: document.createElement('a'),
-		title: document.createElement('h2'),
-		image: document.createElement('img')
+		title: document.createElement('h2')
 	};
 	card.title.innerText = title;
 	card.title.classList.add('page-card-title');
-	card.image.src = image;
-	card.image.classList.add('page-card-image');
+	card.card.style = `background-image:url(${image});`
 	card.card.href = href;
 	card.card.classList.add('page-card');
 	card.card.appendChild(card.title);
-	card.card.appendChild(card.image);
 	return card.card;
 }
 
