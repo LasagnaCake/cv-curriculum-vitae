@@ -3,7 +3,7 @@
 let templateDisplay = document.getElementById("template-display");
 
 let templates = [
-	TemplateCardData("Simple", "images/template1.png", `templates/template1-${lang}.html`),
+	TemplateCardData("Simple", "images/template1.png", `templates/template1/template1-${lang}.html`),
 ]
 
 function TemplateCardData(title, image, href) {
