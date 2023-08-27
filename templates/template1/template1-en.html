@@ -47,8 +47,7 @@
 				<button class="palette-button pb5" onclick="setPalette('pb5')">Palette 5</button><br>
 				<button class="palette-button nopb" onclick="setPalette(null)">Text Only</button>
 				<hr>
-				<input type="file" accept="application/json" id="file-loader" hidden>
-				<label for="file-loader" hidden>FileLoader</label>
+				<input type="file" accept="application/json" id="file-loader" hidden aria-hidden="true">
 				<button class="print-button" onclick="document.getElementById('file-loader').click()">
 					Load Data
 				</button>
