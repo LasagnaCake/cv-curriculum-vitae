@@ -252,7 +252,12 @@ function clearWork() {
 
 function printCurriculum() {
 	updatePage();
+	let workHistory = document.getElementsByClassName('cv-history');
+	if (work.length === 0)
+		workHistory[0].classList.add('no-print');
 	window.print();
+	if (work.length === 0)
+		workHistory[0].classList.remove('no-print');
 }
 
 function saveFile(data, filename, type) {
