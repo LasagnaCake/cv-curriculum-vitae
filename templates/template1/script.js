@@ -252,12 +252,17 @@ function clearWork() {
 
 function printCurriculum() {
 	updatePage();
-	let workHistory = document.getElementsByClassName('cv-history');
-	if (work.length === 0)
+	let workHistory	= document.getElementsByClassName('cv-history');
+	let cvContent	= document.getElementsByClassName('cv-content');
+	if (work.length === 0) {
 		workHistory[0].classList.add('no-print');
+		cvContent[1].classList.add('expand');
+	}
 	window.print();
-	if (work.length === 0)
+	if (work.length === 0) {
 		workHistory[0].classList.remove('no-print');
+		cvContent[1].classList.remove('expand');
+	}
 }
 
 function saveFile(data, filename, type) {
